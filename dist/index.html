@@ -7,7 +7,67 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="content"></div>
+    <div id="content">
+        <div class="homepage">
+            <div class="site-title"></div>
+            <div class="projects">
+                <div class="projectsheader">
+                    <div class="projectstitle">Projects</div>
+                    <svg class="projectsicon">
+                        <use xlink:href="#projectsicon"></use>
+                    </svg>
+                    <svg class="newprojectbutton">
+                        <use xlink:href="#newicon"></use>
+                    </svg>
+                </div>
+                <div class="projectslist">
+                    <div class="project1">home duties</div>
+                    <div class="project2">business meetings</div>
+                    <div class="project3">todo list</div>
+                </div>
+            </div>
+            <div class="tasks">
+                <div class="tasks-header">
+                    <div class="tasks-title">Tasks</div>
+                    <svg class="newtaskicon">
+                        <use xlink:href="#newicon"></use>
+                    </svg>
+                </div>
+                <div class="tasks-list">
+                    <div class="task1">
+                        <div class="taskname">Take out trash</div>
+                        <div class="notes">i need to take out the trash this saturday otherwise my mother will haunt me forever</div>
+                        <div class="prioritylevel">!!!</div>
+                        <div class="datentime">
+                            <div class="date">6/28/2022</div>
+                            <div class="time">8:00 PM</div>
+                        </div>
+                        <div class="status">Pending</div>
+                        <div class="edit">edit</div>
+                        <div class="delete">delete</div>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar"></div>
+            <button class="new-task"></button>
+            
+        </div>
+        <div class="popups">
+            <div class="newprojectpopup hidden">
+                <input class="projectinput" placeholder="Please enter project name">
+                <svg class="addprojectbutton">
+                    <use xlink:href="#newicon"></use>
+                </svg>
+            </div>
+
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
+<svg display="none"><symbol id="newicon" viewBox="0 0 24 24">
+    <path d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+</svg>
+<svg display="none"><symbol id="projectsicon" viewBox="0 0 24 24">
+    <path d="M9 3V18H12V3H9M12 5L16 18L19 17L15 4L12 5M5 5V18H8V5H5M3 19V21H21V19H3Z" />
+</svg>
 </html>
