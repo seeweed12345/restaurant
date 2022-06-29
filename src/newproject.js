@@ -1,3 +1,4 @@
+import { selectProject } from "./index.js";
 let projects = [];
 let i = 0;
 
@@ -9,6 +10,7 @@ class Project {
 function pressNewProjectButton() {
   document.querySelector(".newprojectbutton").addEventListener("click", () => {
     document.querySelector(".newprojectpopup").classList.remove("hidden");
+    exitOutOfAddNewProject();
   });
 }
 
@@ -20,6 +22,19 @@ function pressAddNewProjectButton() {
     displayProjects();
     document.querySelector(".newprojectpopup").classList.add("hidden");
     document.querySelector(".projectinput").value = "";
+    selectProject();
+  });
+}
+
+function exitOutOfAddNewProject() {
+  window.addEventListener("click", function (event) {
+    if (
+      !event.target.closest(".newprojectpopup") &&
+      !event.target.closest(".projectsheader")
+    ) {
+      document.querySelector(".newprojectpopup").classList.add("hidden");
+      console.log("test");
+    }
   });
 }
 
@@ -30,10 +45,14 @@ function displayProjects() {
   }
   for (let x = 0; x < projects.length; x++) {
     let project = document.createElement("div");
-    project.setAttribute(`class`, `${x}`);
+    project.setAttribute(`class`, `project p${x}`);
     project.textContent = `${projects[x].projectName}`;
     element.appendChild(project);
   }
 }
 
-export { pressNewProjectButton, pressAddNewProjectButton };
+export {
+  pressNewProjectButton,
+  pressAddNewProjectButton,
+  exitOutOfAddNewProject,
+};

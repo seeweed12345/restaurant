@@ -21,9 +21,9 @@
                     </svg>
                 </div>
                 <div class="projectslist">
-                    <div class="project1">home duties</div>
-                    <div class="project2">business meetings</div>
-                    <div class="project3">todo list</div>
+                    <div class="project">
+                        <div class="project">test</div>
+                    </div>
                 </div>
             </div>
             <div class="tasks">
@@ -34,7 +34,7 @@
                     </svg>
                 </div>
                 <div class="tasks-list">
-                    <div class="task1">
+                    <div class="task">
                         <div class="taskname">Take out trash</div>
                         <div class="notes">i need to take out the trash this saturday otherwise my mother will haunt me forever</div>
                         <div class="prioritylevel">!!!</div>
@@ -43,7 +43,9 @@
                             <div class="time">8:00 PM</div>
                         </div>
                         <div class="status">Pending</div>
-                        <div class="edit">edit</div>
+                        <svg class="edit">
+                            <use xlink:href="#pencilicon"></use>
+                        </svg>
                         <div class="delete">delete</div>
                     </div>
                 </div>
@@ -59,6 +61,39 @@
                     <use xlink:href="#newicon"></use>
                 </svg>
             </div>
+            <div class="newtaskpopup hidden">
+                <div class="tasknamepopup">
+                    <div class="tasknametitle">Task Name</div>
+                    <input class="tasknameinput">
+                </div>
+                <div class="notespopup">
+                    <div class="notestitle">Description</div>
+                    <textarea id="notesinput" rows="4" cols="20"></textarea>
+                </div>
+                <div class="prioritylevelpopup">
+                    <div class="priorityleveltitle">Priority Level</div>
+                    <select name="prioritylevelinput" id="prioritylevelinput"required>
+                        <option value="!">!</option>
+                        <option value="!!">!!</option>
+                        <option value="!!!">!!!</option>
+                    </select>
+                </div>
+                <div class="timepopup">
+                    <div class="timetitle">Time</div>
+                    <input type="time" id="timeinput" name="timeinput"
+                    min="09:00" max="18:00" required>
+                </div>
+                <div class="datepopup">
+                    <div class="datetitle">date</div>
+                    <div id="calendar-demo">
+                        <div id="calendar-demo-wrapper"></div>
+                        <span class="calendar-demo-msg"></span>
+                      </div>
+                </div>
+                <svg class="addtaskbutton">
+                    <use xlink:href="#newicon"></use>
+                </svg>
+            </div>
 
         </div>
     </div>
@@ -69,5 +104,11 @@
 </svg>
 <svg display="none"><symbol id="projectsicon" viewBox="0 0 24 24">
     <path d="M9 3V18H12V3H9M12 5L16 18L19 17L15 4L12 5M5 5V18H8V5H5M3 19V21H21V19H3Z" />
+</svg>
+<svg display="none"><symbol id="deleteicon" viewBox="0 0 24 24">
+    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+</svg>
+<svg display="none"><symbol id="pencilicon" viewBox="0 0 24 24">
+    <path d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
 </svg>
 </html>

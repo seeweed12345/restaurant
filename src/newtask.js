@@ -1,3 +1,5 @@
+import { currentProject } from "./index.js";
+
 let tasks = [];
 let i = 0;
 
@@ -12,34 +14,120 @@ class Task {
     this.status = status;
   }
 }
-function pressNewProjectButton() {
-  document.querySelector(".newprojectbutton").addEventListener("click", () => {
-    document.querySelector(".newprojectpopup").classList.remove("hidden");
+function pressNewTaskButton() {
+  document.querySelector(".newtaskicon").addEventListener("click", () => {
+    document.querySelector(".newtaskpopup").classList.remove("hidden");
+    exitOutofAddNewTask();
   });
 }
 
-function pressAddNewProjectButton() {
-  document.querySelector(".addprojectbutton").addEventListener("click", () => {
-    let projectName = document.querySelector(".projectinput").value;
-    projects[i] = new Project(projectName);
+function pressAddNewTaskButton() {
+  document.querySelector(".addtaskbutton").addEventListener("click", () => {
+    let project = currentProject;
+    let taskName = document.querySelector(".tasknameinput").value;
+    let taskDescription = document.querySelector("#notesinput").value;
+    let priorityLevel = document.querySelector("#prioritylevelinput").value;
+    let time = document.querySelector("#timeinput").value;
+    let date = document.querySelector(".calendar-demo-msg").innerHTML;
+    let status = "pending";
+    tasks[i] = new Task(
+      project,
+      taskName,
+      taskDescription,
+      priorityLevel,
+      time,
+      date,
+      status
+    );
     i++;
-    displayProjects();
-    document.querySelector(".newprojectpopup").classList.add("hidden");
-    document.querySelector(".projectinput").value = "";
+    displayTasks();
+    document.querySelector(".newtaskpopup").classList.add("hidden");
+    document.querySelector(".tasknameinput").value = "";
+    document.querySelector("#notesinput").value = "";
+    document.querySelector("#prioritylevelinput").value = "";
+    document.querySelector("#timeinput").value = "";
+    document.querySelector(".calendar-demo-msg").innerHTML = "";
   });
 }
 
-function displayProjects() {
-  const element = document.querySelector(".projectslist");
+function exitOutofAddNewTask() {
+  window.addEventListener("click", function (event) {
+    if (
+      !event.target.closest(".tasks-header") &&
+      !event.target.closest(".newtaskpopup")
+    ) {
+      document.querySelector(".newtaskpopup").classList.add("hidden");
+    }
+  });
+}
+
+function displayTasks() {
+  const element = document.querySelector(".tasks-list");
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
-  for (let x = 0; x < projects.length; x++) {
-    let project = document.createElement("div");
-    project.setAttribute(`class`, `${x}`);
-    project.textContent = `${projects[x].projectName}`;
-    element.appendChild(project);
+  for (let x = 0; x < tasks.length; x++) {
+    if (tasks[x].project == currentProject) {
+      let task = document.createElement("div");
+      task.setAttribute(`class`, `task t${x}`);
+      let _taskName = document.createElement("div");
+      _taskName.textContent = `${tasks[x].taskName}`;
+      _taskName.setAttribute(`class`, `taskname`);
+      let _taskDescription = document.createElement("div");
+      _taskDescription.textContent = `${tasks[x].notes}`;
+      _taskDescription.setAttribute(`class`, `notes`);
+      let _priorityLevel = document.createElement("div");
+      _priorityLevel.textContent = `${tasks[x].priorityLevel}`;
+      _priorityLevel.setAttribute(`class`, `prioritylevel`);
+      let _time = document.createElement("div");
+      _time.textContent = `${tasks[x].time}`;
+      _time.setAttribute(`class`, `time`);
+      let _date = document.createElement("div");
+      _date.textContent = `${tasks[x].date}`;
+      _date.setAttribute(`class`, `date`);
+      let _status = document.createElement("div");
+      _status.textContent = `${tasks[x].status}`;
+      _status.setAttribute(`class`, `status`);
+      let _edit = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      _edit.setAttributeNS(null, "viewbox", "0 0 24 24");
+      _edit.classList = `edit e${x}`;
+      let _edit_use = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "use"
+      );
+      _edit_use.setAttributeNS(
+        "http://www.w3.org/1999/xlink",
+        "xlink:href",
+        "#pencilicon"
+      );
+      let _delete = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+      _delete.setAttributeNS(null, "viewbox", "0 0 24 24");
+      _delete.classList = `delete e${x}`;
+      let _delete_use = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "use"
+      );
+      _delete_use.setAttributeNS(
+        "http://www.w3.org/1999/xlink",
+        "xlink:href",
+        "#deleteicon"
+      );
+      element.appendChild(task);
+      task.appendChild(_taskName);
+      task.appendChild(_taskDescription);
+      task.appendChild(_priorityLevel);
+      task.appendChild(_time);
+      task.appendChild(_date);
+      task.appendChild(_status);
+      task.appendChild(_edit);
+      _edit.appendChild(_edit_use);
+      task.appendChild(_delete);
+      _delete.appendChild(_delete_use);
+    }
   }
 }
 
-export { pressNewProjectButton, pressAddNewProjectButton };
+export { pressNewTaskButton, pressAddNewTaskButton, displayTasks };
