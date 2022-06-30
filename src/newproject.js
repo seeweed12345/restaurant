@@ -1,6 +1,11 @@
-import { selectProject } from "./index.js";
+import {
+  changeCurrentProject,
+  selectProject,
+  currentProject,
+} from "./index.js";
 let projects = [];
 let i = 0;
+let lastId;
 
 class Project {
   constructor(projectName) {
@@ -17,12 +22,20 @@ function pressNewProjectButton() {
 function pressAddNewProjectButton() {
   document.querySelector(".addprojectbutton").addEventListener("click", () => {
     let projectName = document.querySelector(".projectinput").value;
+    changeCurrentProject(projectName);
     projects[i] = new Project(projectName);
     i++;
     displayProjects();
     document.querySelector(".newprojectpopup").classList.add("hidden");
     document.querySelector(".projectinput").value = "";
     selectProject();
+    document.querySelector(".project-title").textContent = currentProject;
+    const projectButton = document.querySelectorAll(".project");
+    for (const project of projectButton) {
+      if (project.textContent.includes(currentProject)) {
+        project.classList.add("currentproject");
+      }
+    }
   });
 }
 

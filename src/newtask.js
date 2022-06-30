@@ -1,3 +1,4 @@
+import { pressEditbutton } from "./edittask";
 import { currentProject } from "./index.js";
 
 let tasks = [];
@@ -53,6 +54,7 @@ function pressAddNewTaskButton() {
 function exitOutofAddNewTask() {
   window.addEventListener("click", function (event) {
     if (
+      !event.target.closest(".edit") &&
       !event.target.closest(".tasks-header") &&
       !event.target.closest(".newtaskpopup")
     ) {
@@ -69,27 +71,42 @@ function displayTasks() {
   for (let x = 0; x < tasks.length; x++) {
     if (tasks[x].project == currentProject) {
       let task = document.createElement("div");
-      task.setAttribute(`class`, `task t${x}`);
+      task.setAttribute(`taskId`, `${x}`);
+      task.classList.add("task");
       let _taskName = document.createElement("div");
       _taskName.textContent = `${tasks[x].taskName}`;
-      _taskName.setAttribute(`class`, `taskname`);
+      _taskName.setAttribute(`class`, `taskname n${x}`);
       let _taskDescription = document.createElement("div");
       _taskDescription.textContent = `${tasks[x].notes}`;
-      _taskDescription.setAttribute(`class`, `notes`);
+      _taskDescription.setAttribute(`class`, `notes d${x}`);
       let _priorityLevel = document.createElement("div");
       _priorityLevel.textContent = `${tasks[x].priorityLevel}`;
-      _priorityLevel.setAttribute(`class`, `prioritylevel`);
+      _priorityLevel.setAttribute(`class`, `prioritylevel p${x}`);
+      if (_priorityLevel.textContent == "!") {
+        _priorityLevel.classList.add("lowp");
+      } else if (_priorityLevel.textContent == "!!") {
+        _priorityLevel.classList.add("medp");
+      } else if (_priorityLevel.textContent == "!!!") {
+        _priorityLevel.classList.add("highp");
+      }
       let _time = document.createElement("div");
       _time.textContent = `${tasks[x].time}`;
-      _time.setAttribute(`class`, `time`);
+      _time.setAttribute(`class`, `time t${x}`);
       let _date = document.createElement("div");
       _date.textContent = `${tasks[x].date}`;
-      _date.setAttribute(`class`, `date`);
+      _date.setAttribute(`class`, `date dt${x}`);
       let _status = document.createElement("div");
       _status.textContent = `${tasks[x].status}`;
-      _status.setAttribute(`class`, `status`);
+      _status.setAttribute(`class`, `pending`);
+      if (_status.textContent == "pending") {
+        _status.classList.add("stillpending");
+      } else _status.classList.add("complete");
+      _status.addEventListener("click", (e) => {
+        changeStatus(`${x}`);
+      });
       let _edit = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       _edit.setAttributeNS(null, "viewbox", "0 0 24 24");
+      _edit.setAttribute(`data-typeId`, `${x}`);
       _edit.classList = `edit e${x}`;
       let _edit_use = document.createElementNS(
         "http://www.w3.org/2000/svg",
@@ -106,6 +123,11 @@ function displayTasks() {
       );
       _delete.setAttributeNS(null, "viewbox", "0 0 24 24");
       _delete.classList = `delete e${x}`;
+      _delete.setAttribute(`data-typeId`, `${x}`);
+      _delete.addEventListener("click", (e) => {
+        let taskId = e.target.getAttribute("data-typeId");
+        deleteTask(taskId);
+      });
       let _delete_use = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "use"
@@ -126,8 +148,31 @@ function displayTasks() {
       _edit.appendChild(_edit_use);
       task.appendChild(_delete);
       _delete.appendChild(_delete_use);
+      pressEditbutton();
     }
   }
 }
 
-export { pressNewTaskButton, pressAddNewTaskButton, displayTasks };
+function deleteTask(taskId) {
+  tasks.splice(taskId, 1);
+  i--;
+  displayTasks();
+  console.log("delete task");
+}
+
+function changeStatus(x) {
+  if (tasks[x].status == "pending") {
+    tasks[x].status = "completed";
+  } else {
+    tasks[x].status = "pending";
+  }
+  displayTasks();
+}
+
+export {
+  pressNewTaskButton,
+  pressAddNewTaskButton,
+  displayTasks,
+  exitOutofAddNewTask,
+  deleteTask,
+};
