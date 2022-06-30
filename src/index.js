@@ -70,5 +70,4 @@ pressAddNewProjectButton();
 pressNewTaskButton();
 pressAddNewTaskButton();
 selectProject();
-pressEditbutton();
 export { currentProject, selectProject, changeCurrentProject };

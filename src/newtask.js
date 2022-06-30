@@ -1,4 +1,4 @@
-import { pressEditbutton } from "./edittask";
+import { editTask } from "./edittask";
 import { currentProject } from "./index.js";
 
 let tasks = [];
@@ -108,6 +108,10 @@ function displayTasks() {
       _edit.setAttributeNS(null, "viewbox", "0 0 24 24");
       _edit.setAttribute(`data-typeId`, `${x}`);
       _edit.classList = `edit e${x}`;
+      _edit.addEventListener("click", (e) => {
+        let taskId = e.target.getAttribute("data-typeId");
+        editTask(taskId);
+      });
       let _edit_use = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "use"
@@ -148,7 +152,6 @@ function displayTasks() {
       _edit.appendChild(_edit_use);
       task.appendChild(_delete);
       _delete.appendChild(_delete_use);
-      pressEditbutton();
     }
   }
 }
